@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { checkConnection, retrievePublicKey, getBalance, sendPayment } from "./Freighter";
+import {
+  checkConnection,
+  retrievePublicKey,
+  getBalance,
+  sendPayment,
+  disconnectWalletApi,
+} from "./Freighter";
 
 const Header = () => {
   const [connected, setConnected] = useState(false);
@@ -22,6 +28,16 @@ const Header = () => {
       console.error(e);
     }
   };
+  
+const handleDisconnect = async () => {
+  await disconnectWalletApi();
+  setConnected(false);
+  setPublicKey("");
+  setBalance("0");
+  setDest("");
+  setAmount("");
+  setTxStatus("");
+};
 
   const handleSend = async (e) => {
     e.preventDefault();
@@ -52,9 +68,12 @@ const Header = () => {
             <div>Balance: {balance} XLM</div>
           </>
         )}
-        <button onClick={connectWallet} disabled={connected}>
-          {connected ? "Connected" : "Connect Wallet"}
-        </button>
+        <button
+  onClick={connected ? handleDisconnect : connectWallet}
+>
+  {connected ? "Disconnect" : "Connect Wallet"}
+</button>
+
       </div>
 
       {connected && (
