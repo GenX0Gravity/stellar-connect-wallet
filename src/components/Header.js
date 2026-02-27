@@ -25,12 +25,17 @@ const Header = () => {
 
   const handleSend = async (e) => {
     e.preventDefault();
+    if (!dest || !amount) {
+    return setTxStatus("Please enter destination and amount.");
+  }
     try {
       setTxStatus("Sending...");
       const hash = await sendPayment(dest, amount);
       setTxStatus("Success: " + hash);
       const bal = await getBalance();
       setBalance(Number(bal).toFixed(2));
+      setDest("");
+      setAmount("");
     } catch (e) {
       console.error(e);
       setTxStatus("Error: " + e.message);
