@@ -53,7 +53,7 @@ const sendPayment = async (destination, amount) => {
     )
     .setTimeout(180)
     .build();
-
+ const networkPassphrase = StellarSdk.Networks.TESTNET;
   const signed = await userSignTransaction(
     tx.toXDR(),
     StellarSdk.Networks.TESTNET,
