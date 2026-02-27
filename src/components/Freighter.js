@@ -27,10 +27,10 @@ const getBalance = async () => {
   return xlm ? xlm.balance : "0";
 };
 
-const userSignTransaction = async (xdr, network, signWith) => {
+const userSignTransaction = async (xdr, networkPassphrase, signWith) => {
   return await signTransaction(xdr, {
     networkPassphrase,
-    accountToSign: signWith,
+    address: signWith,
   });
 };
 
@@ -55,10 +55,10 @@ const sendPayment = async (destination, amount) => {
     .build();
 
   const signed = await userSignTransaction(
-    tx.toXDR(),
-    StellarSdk.Networks.TESTNET,
-    address
-  );
+  tx.toXDR(),
+  StellarSdk.Networks.TESTNET, 
+  address
+);
 
   if (signed.error) {
     throw new Error(signed.error);
