@@ -29,7 +29,7 @@ const getBalance = async () => {
 
 const userSignTransaction = async (xdr, network, signWith) => {
   return await signTransaction(xdr, {
-    network,
+    networkPassphrase,
     accountToSign: signWith,
   });
 };
